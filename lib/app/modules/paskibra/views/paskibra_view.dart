@@ -50,7 +50,7 @@ class PaskibraView extends GetView<PaskibraController> {
                     // Image and title section
                     Container(
                       width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 0),
+                      margin: const EdgeInsets.only(bottom: 24), // Tambahkan margin bottom di sini
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),

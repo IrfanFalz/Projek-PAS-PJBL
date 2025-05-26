@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/basket_controller.dart';
+import '../controllers/karate_controller.dart';
 
-class BasketView extends GetView<BasketController> {
-  const BasketView({super.key});
+class KarateView extends GetView<KarateController> {
+  const KarateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class BasketView extends GetView<BasketController> {
                             ),
                             // Gunakan Image.asset bukan Image.network untuk gambar lokal
                             child: Image.asset(
-                              'assets/basket-detail.png',
+                              'assets/karate.png',
                               width: double.infinity,
                               height: 150,
                               fit: BoxFit.cover,
@@ -86,14 +86,14 @@ class BasketView extends GetView<BasketController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Bola Basket',
+                                  'Karate',
                                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Ekstrakurikuler basket adalah wadah bagi siswa yang ingin mengembangkan bakat mereka dalam olahraga basket, baik dari segi teknik, fisik, maupun strategi permainan.',
+                                  'Ekstrakurikuler karate berfokus pada pengembangan fisik, mental, dan keterampilan bela diri siswa melalui latihan teknik dasar dan lanjutan.',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     height: 1.5,
                                   ),
@@ -121,7 +121,7 @@ class BasketView extends GetView<BasketController> {
                           icon: Icons.calendar_today,
                           iconColor: Colors.blue,
                           title: 'Jadwal',
-                          value: 'Selasa',
+                          value: 'Rabu',
                         ),
                         
                         // Anggota box
@@ -130,7 +130,7 @@ class BasketView extends GetView<BasketController> {
                           icon: Icons.people,
                           iconColor: Colors.green,
                           title: 'Anggota',
-                          value: '50 siswa',
+                          value: '30 siswa',
                         ),
                         
                         // Lokasi box
@@ -139,7 +139,7 @@ class BasketView extends GetView<BasketController> {
                           icon: Icons.location_on,
                           iconColor: Colors.red,
                           title: 'Lokasi',
-                          value: 'Lap.Basket',
+                          value: 'Lapangan sekolah',
                         ),
                         
                         // Pembimbing box
@@ -148,7 +148,7 @@ class BasketView extends GetView<BasketController> {
                           icon: Icons.person,
                           iconColor: Colors.purple,
                           title: 'Pembimbing',
-                          value: 'Coach Adi',
+                          value: 'Bapak Hanif',
                         ),
                       ],
                     ),

@@ -30,12 +30,24 @@ class HomeView extends GetView<HomeController> {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
-                fontFamily: 'roboto',
+                fontFamily: 'Montserrat',
               ),
             ),
           ),
         ),
         actions: [
+          // Icon Jadwal - BARU DITAMBAHKAN
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, right: 5.0),
+            child: IconButton(
+              icon: Icon(Icons.event, color: Colors.white, size: 28),
+              onPressed: () {
+                // Navigate to the jadwal page
+                Get.toNamed('/jadwal');
+              },
+            ),
+          ),
+          // Icon Notification - YANG SUDAH ADA
           Padding(
             padding: const EdgeInsets.only(top: 10.0, right: 5.0),
             child: IconButton(
@@ -48,28 +60,34 @@ class HomeView extends GetView<HomeController> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // Header profile section with animation
-            _buildProfileHeader(),
-            
-            // Main content with cards
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Ekstrakurikuler Terpopuler section
-                _buildPopularExtracurricular(),
-                
-                // Ekstrakurikuler Aktif section
-                _buildActiveExtracurricular(),
-                
-                // Add bottom padding for better UX
-                SizedBox(height: 16),
-              ],
-            ),
-          ],
+      body: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (notification) {
+          notification.disallowIndicator();
+          return true;
+        },
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(), // Changed from BouncingScrollPhysics to ClampingScrollPhysics
+          child: Column(
+            children: [
+              // Header profile section with animation
+              _buildProfileHeader(),
+              
+              // Main content with cards
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Ekstrakurikuler Terpopuler section
+                  _buildPopularExtracurricular(),
+                  
+                  // Ekstrakurikuler Aktif section
+                  _buildActiveExtracurricular(),
+                  
+                  // Add bottom padding for better UX
+                  SizedBox(height: 16),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       // Add the custom bottom navigation bar
@@ -103,10 +121,22 @@ class HomeView extends GetView<HomeController> {
             scale: controller.welcomeAnimation,
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('assets/default.png'),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to profile page when tapping on the profile image
+                    // Update the navigation index to profile (assuming profile is index 3)
+                    final NavigationController navController = Get.find<NavigationController>();
+                    navController.setIndex(3); // Set index to Profile (assuming it's 3)
+                    Get.toNamed('/profil');
+                  },
+                  child: Hero(
+                    tag: 'profileImage',
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('assets/default.png'),
+                    ),
+                  ),
                 ),
                 SizedBox(width: 15),
                 Column(
@@ -125,6 +155,7 @@ class HomeView extends GetView<HomeController> {
                         color: Colors.white,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
                       ),
                     ),
                     Text(
@@ -148,7 +179,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  // Animated search bar
+  // Animated search bar with navigation functionality
   Widget _buildSearchBar() {
     return FadeTransition(
       opacity: controller.fadeAnimation,
@@ -169,7 +200,7 @@ class HomeView extends GetView<HomeController> {
         child: TextFormField(
           controller: controller.searchController,
           decoration: InputDecoration(
-            hintText: 'Cari informasi...',
+            hintText: 'Cari ekstrakurikuler...',
             hintStyle: TextStyle(
               color: Colors.grey.shade500,
               fontSize: 16,
@@ -184,19 +215,117 @@ class HomeView extends GetView<HomeController> {
           ),
           onChanged: controller.updateSearchQuery,
           onFieldSubmitted: (value) {
-            Get.snackbar(
-              'Pencarian',
-              'Mencari: $value',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.red.shade400,
-              colorText: Colors.white,
-              margin: EdgeInsets.all(10),
-              borderRadius: 10,
-              duration: Duration(seconds: 1),
-            );
+            _handleSearch(value);
           },
         ),
       ),
+    );
+  }
+
+  // Method to handle search navigation
+  void _handleSearch(String searchQuery) {
+    if (searchQuery.isEmpty) {
+      Get.snackbar(
+        'Pencarian',
+        'Masukkan nama ekstrakurikuler yang ingin dicari',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange.shade400,
+        colorText: Colors.white,
+        margin: EdgeInsets.all(10),
+        borderRadius: 10,
+        duration: Duration(seconds: 2),
+      );
+      return;
+    }
+
+    // Define mapping for search terms to routes
+    final Map<String, String> ekstrakurikulerRoutes = {
+      // Popular extracurriculars
+      'futsal': '/futsal',
+      'bola voli': '/voli',
+      'voli': '/voli',
+      'volleyball': '/voli',
+      'bola basket': '/basket',
+      'basket': '/basket',
+      'basketball': '/basket',
+      'dewan galang': '/dewan-galang',
+      'galang': '/dewan-galang',
+      'paskibra': '/paskibra',
+      'paskib': '/paskibra',
+      
+      // Active extracurriculars
+      'karate': '/karate',
+      'palang merah remaja': '/palang-merah-remaja',
+      'pmr': '/palang-merah-remaja',
+      'palang merah': '/palang-merah-remaja',
+      'al banjari': '/al-banjari',
+      'banjari': '/al-banjari',
+      'albanjari': '/al-banjari',
+      'tari': '/tari',
+      'dance': '/tari',
+      'band': '/band',
+      'musik': '/band',
+      'music': '/band',
+    };
+
+    // Convert search query to lowercase for case-insensitive matching
+    String lowerCaseQuery = searchQuery.toLowerCase().trim();
+    
+    // Find exact match first
+    if (ekstrakurikulerRoutes.containsKey(lowerCaseQuery)) {
+      Get.toNamed(ekstrakurikulerRoutes[lowerCaseQuery]!);
+      _showSuccessSnackbar(searchQuery);
+      return;
+    }
+    
+    // Find partial match
+    String? matchedRoute;
+    String? matchedName;
+    
+    for (String key in ekstrakurikulerRoutes.keys) {
+      if (key.contains(lowerCaseQuery) || lowerCaseQuery.contains(key)) {
+        matchedRoute = ekstrakurikulerRoutes[key];
+        matchedName = key;
+        break;
+      }
+    }
+    
+    if (matchedRoute != null) {
+      Get.toNamed(matchedRoute);
+      _showSuccessSnackbar(matchedName!);
+    } else {
+      // Show available options
+      _showNotFoundSnackbar(searchQuery);
+    }
+  }
+
+  // Show success message when navigation is successful
+  void _showSuccessSnackbar(String ekstrakurikuler) {
+    Get.snackbar(
+      'Pencarian Berhasil',
+      'Menampilkan halaman $ekstrakurikuler',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green.shade400,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(10),
+      borderRadius: 10,
+      duration: Duration(seconds: 2),
+      icon: Icon(Icons.check_circle, color: Colors.white),
+    );
+  }
+
+  // Show not found message with suggestions
+  void _showNotFoundSnackbar(String searchQuery) {
+    Get.snackbar(
+      'Ekstrakurikuler Tidak Ditemukan',
+      'Coba cari: Futsal, Basket, Voli, Paskibra, Dewan Galang, Karate, PMR, Tari, Band, Al Banjari',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.orange.shade400,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(10),
+      borderRadius: 10,
+      duration: Duration(seconds: 4),
+      icon: Icon(Icons.info_outline, color: Colors.white),
     );
   }
 

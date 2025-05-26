@@ -20,4 +20,12 @@ abstract class Routes {
   static const VOLI = '/voli';
   static const PENDAFTARAN = '/pendaftaran';
   static const EDIT_PROFILE = '/edit-profile';
+  static const KARATE = '/karate';
+  static const PALANG_MERAH_REMAJA = '/palang-merah-remaja';
+  static const AL_BANJARI = '/al-banjari';
+  static const TARI = '/tari';
+  static const BAND = '/band';
+  static const JADWAL = '/jadwal';
+  static const SETTINGS = '/settings';
+  static const HELP = '/help';
 }

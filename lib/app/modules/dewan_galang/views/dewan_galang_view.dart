@@ -50,7 +50,7 @@ class DewanGalangView extends GetView<DewanGalangController> {
                     // Image and title section
                     Container(
                       width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 0),
+                      margin: const EdgeInsets.only(bottom: 24),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),

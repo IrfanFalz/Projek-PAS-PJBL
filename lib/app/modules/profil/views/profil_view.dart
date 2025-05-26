@@ -16,7 +16,7 @@ class ProfilView extends GetView<ProfilController> {
             // Header dengan foto profil
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(20, 80, 20, 25),
+              padding: const EdgeInsets.fromLTRB(20, 60, 20, 25),
               decoration: const BoxDecoration(
                 color: Color(0xFFE04E4E),
                 borderRadius: BorderRadius.only(
@@ -84,7 +84,18 @@ class ProfilView extends GetView<ProfilController> {
                   _buildEkstraList(),
                   const SizedBox(height: 20),
 
-                  // Menu pengaturan yang disederhanakan
+                  // Menu pengaturan yang diperluas
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Menu Akun',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   _buildMenuList(),
                   const SizedBox(height: 20), // Tambahkan space di bawah
                 ],
@@ -165,25 +176,109 @@ class ProfilView extends GetView<ProfilController> {
   }
 
   Widget _buildMenuList() {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.edit, color: Colors.blue),
-            title: const Text('Edit Profil'),
-            onTap: controller.onEditProfileTap,
+    return Column(
+      children: [
+        // Kategori Akun
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          const Divider(height: 1, indent: 16, endIndent: 16),
-          ListTile(
+          child: Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.edit, color: Colors.blue),
+                title: const Text('Edit Profil'),
+                subtitle: const Text('Ubah informasi pribadi'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: controller.onEditProfileTap,
+              ),
+              const Divider(height: 1, indent: 16, endIndent: 16),
+              ListTile(
+                leading: const Icon(Icons.lock, color: Colors.orange),
+                title: const Text('Ubah Password'),
+                subtitle: const Text('Ganti password akun'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: controller.showChangePasswordModal,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // Kategori Pengaturan
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.settings, color: Colors.grey),
+                title: const Text('Pengaturan'),
+                subtitle: const Text('Preferensi aplikasi'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: controller.onSettingsTap,
+              ),
+              const Divider(height: 1, indent: 16, endIndent: 16),
+              ListTile(
+                leading: const Icon(Icons.notifications, color: Colors.purple),
+                title: const Text('Notifikasi'),
+                subtitle: const Text('Kelola notifikasi'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: controller.onNotificationsTap,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // Kategori Bantuan
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.help_outline, color: Colors.green),
+                title: const Text('Bantuan'),
+                subtitle: const Text('FAQ dan panduan'),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: controller.onHelpTap,
+              ),
+              const Divider(height: 1, indent: 16, endIndent: 16),
+              ListTile(
+                leading: const Icon(Icons.info_outline, color: Colors.cyan),
+                title: const Text('Tentang Aplikasi'),
+                subtitle: const Text('Informasi aplikasi'),
+                trailing: const Text(
+                  'V 1.1.0',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onTap: controller.onAboutTap,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // Logout
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
             title: const Text('Logout', style: TextStyle(color: Colors.red)),
+            subtitle: const Text('Keluar dari akun'),
             onTap: controller.showLogoutConfirmation,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../modules/al-banjari/bindings/al_banjari_binding.dart';
+import '../modules/al-banjari/views/al_banjari_view.dart';
+import '../modules/band/bindings/band_binding.dart';
+import '../modules/band/views/band_view.dart';
 import '../modules/basket/bindings/basket_binding.dart';
 import '../modules/basket/views/basket_view.dart';
 import '../modules/dewan_galang/bindings/dewan_galang_binding.dart';
@@ -12,12 +16,20 @@ import '../modules/futsal/bindings/futsal_binding.dart';
 import '../modules/futsal/views/futsal_view.dart';
 import '../modules/galeri/bindings/galeri_binding.dart';
 import '../modules/galeri/views/galeri_view.dart';
+import '../modules/help/bindings/help_binding.dart';
+import '../modules/help/views/help_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/jadwal/bindings/jadwal_binding.dart';
+import '../modules/jadwal/views/jadwal_view.dart';
+import '../modules/karate/bindings/karate_binding.dart';
+import '../modules/karate/views/karate_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
+import '../modules/palang-merah-remaja/bindings/palang_merah_remaja_binding.dart';
+import '../modules/palang-merah-remaja/views/palang_merah_remaja_view.dart';
 import '../modules/paskibra/bindings/paskibra_binding.dart';
 import '../modules/paskibra/views/paskibra_view.dart';
 import '../modules/pendaftaran/bindings/pendaftaran_binding.dart';
@@ -30,8 +42,12 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/reset-password/bindings/reset_password_binding.dart';
 import '../modules/reset-password/views/reset_password_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/tari/bindings/tari_binding.dart';
+import '../modules/tari/views/tari_view.dart';
 import '../modules/voli/bindings/voli_binding.dart';
 import '../modules/voli/views/voli_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
@@ -151,6 +167,46 @@ class AppPages {
       name: Routes.EDIT_PROFILE,
       page: () => const EditProfileView(),
       binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.KARATE,
+      page: () => const KarateView(),
+      binding: KarateBinding(),
+    ),
+    GetPage(
+      name: Routes.PALANG_MERAH_REMAJA,
+      page: () => const PalangMerahRemajaView(),
+      binding: PalangMerahRemajaBinding(),
+    ),
+    GetPage(
+      name: Routes.AL_BANJARI,
+      page: () => const AlBanjariView(),
+      binding: AlBanjariBinding(),
+    ),
+    GetPage(
+      name: Routes.TARI,
+      page: () => const TariView(),
+      binding: TariBinding(),
+    ),
+    GetPage(
+      name: Routes.BAND,
+      page: () => const BandView(),
+      binding: BandBinding(),
+    ),
+    GetPage(
+      name: Routes.JADWAL,
+      page: () => JadwalView(),
+      binding: JadwalBinding(),
+    ),
+    GetPage(
+      name: Routes.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: Routes.HELP,
+      page: () => const HelpView(),
+      binding: HelpBinding(),
     ),
   ];
 }

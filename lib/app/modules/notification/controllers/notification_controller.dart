@@ -9,6 +9,7 @@ class NotificationController extends GetxController {
   final RxList<NotificationItem> notifications = <NotificationItem>[].obs;
   final RxString selectedFilter = 'Semua'.obs;
   final List<String> filterOptions = ['Semua', 'Belum dibaca', 'Sudah dibaca'];
+  final RxBool isRefreshing = false.obs;
 
   @override
   void onInit() {
@@ -125,7 +126,69 @@ class NotificationController extends GetxController {
       colorText: Colors.white,
       margin: EdgeInsets.all(10),
       borderRadius: 10,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
+    );
+  }
+
+  Future<void> refreshNotifications() async {
+    if (isRefreshing.value) return; // Prevent multiple refresh
+    
+    isRefreshing.value = true;
+    
+    // Simulasi delay untuk fetch data dari server
+    await Future.delayed(Duration(seconds: 2));
+    
+    // Di sini Anda bisa menambahkan logic untuk fetch data terbaru dari server
+    // Untuk contoh ini, kita reload data yang sudah ada
+    final tempNotifications = List<NotificationItem>.from(notifications);
+    notifications.clear();
+    await Future.delayed(Duration(milliseconds: 100));
+    notifications.addAll(tempNotifications);
+    
+    isRefreshing.value = false;
+    
+    Get.snackbar(
+      'Berhasil',
+      'Notifikasi berhasil diperbarui',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(10),
+      borderRadius: 10,
+      duration: Duration(seconds: 1),
+      icon: Icon(Icons.check_circle, color: Colors.white),
+    );
+  }
+
+  void deleteAllNotifications() {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Hapus Semua Notifikasi'),
+        content: Text('Apakah Anda yakin ingin menghapus semua notifikasi? Tindakan ini tidak dapat dibatalkan.'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              notifications.clear();
+              Get.back();
+              Get.snackbar(
+                'Berhasil',
+                'Semua notifikasi telah dihapus',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+                margin: EdgeInsets.all(10),
+                borderRadius: 10,
+                duration: Duration(seconds: 1),
+              );
+            },
+            child: Text('Hapus', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
     );
   }
 
